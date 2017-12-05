@@ -1,0 +1,8 @@
+include LICENSE
+include README.md
+recursive-include docs/*
+include agape/authentication/migrations/*
+include agape/organizations/migrations/*
+include agape/people/migrations/*
+include agape/members/migrations/*
+include agape/contacts/migrations/*

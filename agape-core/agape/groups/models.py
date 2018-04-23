@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 class Group (models.Model):
-
     entity = 'group'
 
     DISABLED = -1

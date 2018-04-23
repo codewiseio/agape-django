@@ -21,6 +21,8 @@ from .serializers import UserSerializer
 from .models import UserActivation, ResetPasswordRequest
 from .settings import AUTHENTICATION
 
+from agape.signals import trigger
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """ Viewset that provides CRUD operations for user accounts
@@ -31,6 +33,8 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    context = 'user'
+
     
     def get_permissions(self):
         """ Set permission restrictions """
@@ -47,7 +51,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return(permissions.IsAuthenticated(), IsAccountOwner() )
     
 
-    def create(self,request):    
+    def create(self,request,*args,**kwargs):    
         """ Perform account registration
             
         Accepts an email address and password as post data and creates a new user account.
@@ -55,23 +59,26 @@ class UserViewSet(viewsets.ModelViewSet):
         """
 
          # create the user
-        data = request.data.copy()
+        trigger(self.context+'.create:request',request,*args,**kwargs)
 
-        # this notifier is going to modify the data before sending it to the serializer
-        # this.observers.notifyBefore('agape.authentication.users.create', [request, data] );
-        # scope = scope('agape.authentication.users.create')
-        # scope.announce('before',request, data)
+        data = request.data.copy()
+        trigger(self.context+'.create:before',data)
 
 
         # check for existing account with given email
         try:
             duplicate = User.objects.get(email=request.data.get('email'))
             if duplicate:
-                return Response({
-                    'status': 'Conflict',
-                    'message': 'This email is already in use.',
-                    'message-token': 'conflict-email'
+                
+                response = Response({
+                    'status': 'Fail',
+                    'message': 'This email is already in use.'
                 }, status=status.HTTP_409_CONFLICT)
+
+                trigger(self.context+'.create:fail',response)
+                return response
+
+                return 
         except:
             pass
 
@@ -84,24 +91,32 @@ class UserViewSet(viewsets.ModelViewSet):
             
             # create the user account
             instance =  serializer.save()
+            trigger(self.context+'.create:success',instance)
 
             # if account requires activation
             if AUTHENTICATION['REQUIRE_ACTIVATION']:
+
                 # create and send the activation link
                 self.dispatch_activation_email(instance,request)
 
             # remove password data from response
             serializer = self.serializer_class(instance)
-            response = serializer.data
+            serialized_data = serializer.data
+            trigger(self.context+'.create:serialize',serialized_data,instance)
 
-            return Response(response, status=status.HTTP_201_CREATED)
+
+            response = Response(serialized_data, status=status.HTTP_201_CREATED)
+            trigger(self.context+'.create:response',response)
+            return response
         
         else:
             # data not valid, return bad request response
-            return Response({
-                'status': 'Bad request',
+            response = Response({
+                'status': 'Fail',
                 'message': 'Account could not be created with received data.'
             }, status=status.HTTP_400_BAD_REQUEST)
+            trigger(self.context+'.create:fail',response)
+            return response
 
 
 
@@ -109,17 +124,17 @@ class UserViewSet(viewsets.ModelViewSet):
         """ Update user data. Ensure password is encrypted. """
 
         # confirm current password to commit credential changes
-        if request.data.get('current_password') and not request.data.get('current_password') == "":
+        if request.data.get('confirm_password') and not request.data.get('confirm_password') == "":
             user = User.objects.get(pk=pk)
             
             # authenticate the password
-            auth = authenticate(email=user.email, password=request.data.get('current_password'))
+            auth = authenticate(email=user.email, password=request.data.get('confirm_password'))
 
         # throw error if current password not given
         else:
             return Response({
-                'status': 'Password required',
-                'message': 'Current password required.'
+                'status': 'fail',
+                'message': 'Current password incorrect.'
             }, status=status.HTTP_401_UNAUTHORIZED)
 
 
@@ -133,7 +148,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 request.data.pop('password');
             else:
                 return Response({
-                    'status': 'Invalid password',
+                    'status': 'fail',
                     'message': 'Current password required.'
                 }, status=status.HTTP_401_UNAUTHORIZED)     
 
@@ -165,14 +180,17 @@ class UserViewSet(viewsets.ModelViewSet):
         current_site = get_current_site(request)
         link = 'http://{}/activate/{}'.format(current_site.domain, activation.key)
 
-        # dispatch the email
-        send_mail(
-            'Activate your account at {}'.format(current_site.name),
-            'Please activate your account by following this link \n\n{}\n\n-'.format(link),
-            'test@example.com',
-            [user.email],
-            fail_silently=False
-        )
+        try:
+            # dispatch the email
+            send_mail(
+                'Activate your account at {}'.format(current_site.name),
+                'Please activate your account by following this link \n\n{}\n\n-'.format(link),
+                'test@example.com',
+                [user.email],
+                fail_silently=False
+            )
+        except error:
+            print( error )
 
 
 class AuthenticationView(views.APIView):
@@ -210,23 +228,24 @@ class AuthenticationView(views.APIView):
                 token = jwt_encode_handler(payload)
 
                 # create the response
-                response = UserSerializer(user).data
-                response['token'] = token
-                   
+                response = {
+                    'user': UserSerializer(user).data,
+                    'token': token 
+                    }
                 return Response( response, status=status.HTTP_200_OK );
 
             # if user is not active
             else:
                 return Response({
-                    'status': 'Unauthorized',
+                    'status': 'unauthorized',
                     'message': 'This user has been disabled.'
                 }, status=status.HTTP_401_UNAUTHORIZED)
 
         # could not authenticate user
         else:
             return Response({
-                'status': 'Unauthorized',
-                'message': 'Email/password combination invalid.'
+                'status': 'unauthorized',
+                'message': 'Invalid credentials.'
             }, status=status.HTTP_401_UNAUTHORIZED)    
 
 
@@ -257,7 +276,7 @@ class AuthenticationView(views.APIView):
         if key == None:
             return Response({
                     'status': 'fail',
-                    'message': 'Could not activate account',
+                    'message': 'No activation key given.',
                 },  status=status.HTTP_400_BAD_REQUEST);
 
         # perform key lookup
@@ -330,7 +349,7 @@ class ResetPasswordRequestView(views.APIView):
         if len(user) == 0:
             return Response({
                     'status': 'fail',
-                    'message': 'No account registered with this email address.',
+                    'message': 'No user with this email address.',
                 },  status=status.HTTP_404_NOT_FOUND);
 
         # user does exist
@@ -341,8 +360,8 @@ class ResetPasswordRequestView(views.APIView):
         if user.status == User.DISABLED:
             return Response({
                     'status': 'fail',
-                    'message': 'This account has been disabled.',
-                },  status=status.HTTP_404_BAD_REQUEST);
+                    'message': 'This user has been disabled.',
+                },  status=status.HTTP_400_BAD_REQUEST);
         
         # check if there is another password reset request sent in the past 30 minutes
         # TODO: Allow minutes to be configured via settings module
@@ -385,7 +404,8 @@ class ResetPasswordRequestView(views.APIView):
         # otherwise, confirm password reset link is valid
         else:
             return Response({
-                    'status': 'ok'
+                    'status': 'success',
+                    'message': 'Password reset key is valid.'
                 }, status=status.HTTP_200_OK);
 
 
@@ -461,27 +481,27 @@ class ResetPasswordRequestView(views.APIView):
             # return 404 if no matching reset request
             return Response({
                     'status': 'fail',
-                    'message': 'This link is not valid.'
+                    'message': 'This password reset key is not valid.'
                 }, status=status.HTTP_404_NOT_FOUND);
 
         # return error if link has been used already or is disabled
         if instance.status == ResetPasswordRequest.USED:
             return Response({
                     'status': 'fail',
-                    'message': 'This link has expired.'
+                    'message': 'This password reset key has expired.'
                 }, status=status.HTTP_410_GONE);
 
         elif instance.status == ResetPasswordRequest.DISABLED:
             return Response({
                     'status': 'used',
-                    'message': 'This link has been disabled.'
-                }, status=status.HTTP_401_UNAUTHORIZED);
+                    'message': 'This password reset key has been disabled.'
+                }, status=status.HTTP_403_FORBIDDEN);
 
         # return error if link has expired
         elif instance.created < timezone.now() - timedelta(minutes=AUTHENTICATION.get('RESET_PASSWORD_EXPIRES')):
             return Response({
                     'status': 'fail',
-                    'message': 'This link has expired.'
+                    'message': 'This password reset key has expired.'
                 }, status=status.HTTP_410_GONE);
 
         # check that user is not disabled
@@ -489,7 +509,7 @@ class ResetPasswordRequestView(views.APIView):
             return Response({
                     'status': 'fail',
                     'message': 'This account has been disabled.',
-                },  status=status.HTTP_401_UNAUTHORIZED);
+                },  status=status.HTTP_403_FORBIDDEN);
 
         else:
             return instance
@@ -534,13 +554,10 @@ class ValidateEmailView(views.APIView):
         results = duplicates.all()
         if len(results) > 0:
             return Response({
-                'status': 'conflict',
                 'valid': False,
-                'message': 'This email is already in use.',
-                'message-token': 'conflict-email'
+                'message': 'This email is already in use.'
             }, status=status.HTTP_200_OK)
         else:
             return Response({
-                'status': 'Valid',
                 'valid': True
             }, status=status.HTTP_200_OK)

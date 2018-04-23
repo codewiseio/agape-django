@@ -16,6 +16,10 @@ class Organization (models.Model):
     name        = models.CharField(max_length=255,null=False,blank=False)
     slug        = models.SlugField(max_length=255,allow_unicode=True,blank=True)
 
+    class Meta:
+        permissions = (
+            ('view_organization', 'View organization'),
+        )
 
     def moniker(self):
         return '{}:{}'.format(self.entity, self.id)

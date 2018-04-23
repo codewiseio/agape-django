@@ -8,21 +8,27 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-agape',
-    version='0.2.2',
+    name='agape-django',
+    version='0.2.6',
     packages=['agape','agape.authentication','agape.contacts','agape.organizations','agape.people','agape.members',],
     include_package_data=True,
     license='MIT License', 
     description='Collection of reusable Django Applications for RAD',
     long_description=README,
-    url='https://codewise.live/',
+    url = 'https://github.com/codewiseio/agape-django',
     author='Jeffrey Ray Hallock',
     author_email='codewiseio@gmail.com',
     test_suite = "runtests.runtests",
+    install_requires = [
+        'Django>=1.11.5',
+        'django-cors-headers>=2.1.0',
+        'django-filter>=1.1.0',
+        'djangorestframework>=3.6.4',
+        'djangorestframework-jwt>=1.11.0'
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: Django Rest Framework',  # replace "X.Y" as appropriate
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',  # example license
         'Operating System :: OS Independent',

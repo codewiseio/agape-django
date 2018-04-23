@@ -72,7 +72,7 @@ class APITestCase(TestCase):
         # attempt to login with credentials (should pass because account has been activated)
         response = self.client.post('/api/v1/authentication/', {'email': 'testing@example.com', 'password':'testing'})
         self.assertEqual(response.status_code, 200, "Sign in successful")
-        self.assertEqual(response.data.get('email'), "testing@example.com")
+        self.assertEqual(response.data['user'].get('email'), "testing@example.com")
         self.assertTrue(response.data.get('token'), "Received authentication token.")
 
         # logout
@@ -200,11 +200,11 @@ class APITestCase(TestCase):
 
         # check password reset link is now disabled
         response = self.client.get('/api/v1/authentication/password/{}/'.format(another.key))
-        self.assertEqual(response.status_code, 401, "Link has been disabled")
+        self.assertEqual(response.status_code, 403, "Link has been disabled")
 
         # try resetting password on disbaled link
         response = self.client.patch('/api/v1/authentication/password/{}/'.format(another.key), json.dumps({'password': 'newpass'}), content_type='application/json')
-        self.assertEqual(response.status_code, 401, "Link has been disabled")
+        self.assertEqual(response.status_code, 403, "Link has been disabled")
 
         # set the new link to enabled
         another.status = ResetPasswordRequest.ENABLED
@@ -216,11 +216,11 @@ class APITestCase(TestCase):
 
         # check password reset link is now disabled
         response = self.client.get('/api/v1/authentication/password/{}/'.format(another.key))
-        self.assertEqual(response.status_code, 401, "User has been disabled")
+        self.assertEqual(response.status_code, 403, "User has been disabled")
 
         # try resetting password on disbaled link
         response = self.client.patch('/api/v1/authentication/password/{}/'.format(another.key), json.dumps({'password': 'newpass'}), content_type='application/json')
-        self.assertEqual(response.status_code, 401, "User has been disabled")    
+        self.assertEqual(response.status_code, 403, "User has been disabled")    
 
 
     def test_validate_email(self):
@@ -261,14 +261,14 @@ class APITestCase(TestCase):
         client.credentials(HTTP_AUTHORIZATION='Bearer ' + response.data.get('token'))
 
         # update password
-        userid = response.data.get('id')    
-        response = client.patch('/api/v1/users/{}/'.format(userid), json.dumps({'password':'newpass','current_password':'testing'}), content_type='application/json')
+        userid = response.data['user'].get('id')    
+        response = client.patch('/api/v1/users/{}/'.format(userid), json.dumps({'password':'newpass','confirm_password':'testing'}), content_type='application/json')
         self.assertEqual(response.status_code, 200, "Updated password")    
 
-        # update email
-        userid = response.data.get('id')    
-        response = client.patch('/api/v1/users/{}/'.format(userid), json.dumps({'email':'updated@example.com','current_password':'newpass'}), content_type='application/json')
+        # update email 
+        response = client.patch('/api/v1/users/{}/'.format(userid), json.dumps({'email':'updated@example.com','confirm_password':'newpass'}), content_type='application/json')
         self.assertEqual(response.status_code, 200, "Updated password")   
+        
 
         # login with new credentials
         response = client.post('/api/v1/authentication/', {'email': 'updated@example.com', 'password':'newpass'})
@@ -362,7 +362,7 @@ class APITestCase(TestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + response.data.get('token'))
         
         # retrieve user (authorized)
-        userid = response.data['id']
+        userid = response.data['user']['id']
         response = self.client.get('/api/v1/users/{}/'.format(userid))
         self.assertEqual(response.status_code, 200, "Retrieved user data")    
 

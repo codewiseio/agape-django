@@ -33,9 +33,13 @@ web applications.
 ## Developer Instructions
 
 
-### Packaging
+### Packaging & Distribution
 
+# Package only
 python setup.py sdist
+
+# Package and submit to PyPi repository
+python setup.py sdist upload -r pypi
 
 ### Testing
 
@@ -45,4 +49,6 @@ python runtests.py agape.[module]
 
 ### Installation
 
-pip install ../django-agape/dist/django-agape-0.1.tar.gz
+pip install ../django-agape/dist/django-agape-*.tar.gz
+
+pip install django-agape

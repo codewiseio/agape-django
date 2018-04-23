@@ -40,16 +40,18 @@ python runtests.py agape.[module]
 
 ### Packaging & Distribution
 
-Package only
+#### Package only
 python setup.py sdist
 
-Package and submit to PyPi repository
+#### Package and submit to PyPi repository
 python setup.py sdist upload -r pypi
 
 ### Installation
 
-Install locally
+#### Install locally
+
 pip install ../django-agape/dist/django-agape-*.tar.gz
 
-Install from PyPi
+#### Install from PyPi
+
 pip install django-agape

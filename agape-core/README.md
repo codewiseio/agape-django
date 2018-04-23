@@ -32,20 +32,19 @@ web applications.
 
 ## Developer Instructions
 
-
-### Packaging & Distribution
-
-# Package only
-python setup.py sdist
-
-# Package and submit to PyPi repository
-python setup.py sdist upload -r pypi
-
 ### Testing
 
 python runtests.py 
-python runtests.py agape.people
+python runtests.py agape.authentication
 python runtests.py agape.[module]
+
+### Packaging & Distribution
+
+#### Package only
+python setup.py sdist
+
+#### Package and submit to PyPi repository
+python setup.py sdist upload -r pypi
 
 ### Installation
 

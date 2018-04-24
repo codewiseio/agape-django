@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='agape-django',
-    version='0.2.6',
+    version='0.2.7',
     packages=['agape','agape.authentication','agape.contacts','agape.organizations','agape.people','agape.members',],
     include_package_data=True,
     license='MIT License', 

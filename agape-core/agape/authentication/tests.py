@@ -6,7 +6,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 # Create your tests here.
-from .models import User, UserActivation, ResetPasswordRequest
+from .models import User, UserManager, UserActivation, ResetPasswordRequest
 from .settings import AUTHENTICATION
 
 class UserTestCase(TestCase):
@@ -29,7 +29,25 @@ class UserTestCase(TestCase):
     def test_password_reset(self):
       user = User.objects.get(email="codewiseio@gmail.com")
       instance = ResetPasswordRequest.objects.create(user=user)
-      self.assertTrue(instance.key, "Created activation key")      
+      self.assertTrue(instance.key, "Created activation key")   
+
+class UserManagerTestCase(TestCase):
+    
+    def test_create_user(self):
+        user_manager = UserManager()
+        user = user_manager.create_user('test@example.com','testingpassword')
+
+        user = User.objects.get(email='test@example.com')
+        self.assertEqual(user.email,  'test@example.com')
+
+    def test_create_superuser(self):
+        user_manager = UserManager()
+        user = user_manager.create_superuser('admin@example.com','testingpassword')  
+
+        user = User.objects.get(email="admin@example.com")
+        self.assertEqual(user.email,  'admin@example.com')     
+
+
 
 
 

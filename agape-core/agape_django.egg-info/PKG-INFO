@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: agape-django
-Version: 0.2.7
+Version: 0.2.8
 Summary: Collection of reusable Django Applications for RAD
 Home-page: https://github.com/codewiseio/agape-django
 Author: Jeffrey Ray Hallock

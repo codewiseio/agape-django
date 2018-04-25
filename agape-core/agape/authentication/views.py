@@ -178,7 +178,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
         # create the link
         current_site = get_current_site(request)
-        link = 'http://{}/activate/{}'.format(current_site.domain, activation.key)
+        protocol = 'https' if request.is_secure() else 'http' 
+        link = '{}://{}/activate/{}'.format(protocol, current_site.domain, activation.key)
 
         try:
             # dispatch the email
@@ -524,7 +525,8 @@ class ResetPasswordRequestView(views.APIView):
 
         # create the link
         current_site = get_current_site(request)
-        link = 'http://{}/reset-password/{}'.format(current_site.domain, instance.key)
+        protocol = 'https' if request.is_secure() else 'http' 
+        link = '{}://{}/reset-password/{}'.format(protocol, current_site.domain, instance.key)
 
         # dispatch the email
         send_mail(

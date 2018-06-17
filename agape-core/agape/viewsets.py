@@ -25,7 +25,7 @@ class ModelViewSet(viewsets.ModelViewSet):
 		# serialize instance data
 		serializer = self.get_serializer(instance)
 		serialized_data = serializer.data
-		trigger(self.context+'.retrieve:serialize',serialized_data)		
+		trigger(self.context+'.create:serialize',serialized_data)		
 
 		# return a response
 		headers = self.get_success_headers(serialized_data)
@@ -60,7 +60,7 @@ class ModelViewSet(viewsets.ModelViewSet):
 		instance = self.get_object()
 		trigger(self.context+'.update:retrieve',instance)
 
-		data = request.data
+		data = kwargs.get('data') or request.data
 		trigger(self.context+'.update:before',data)
 
 		serializer = self.get_serializer(instance, data=request.data, partial=partial)
@@ -103,9 +103,7 @@ class ModelViewSet(viewsets.ModelViewSet):
 		    return self.get_paginated_response(serializer.data)
 
 		serializer = self.get_serializer(queryset, many=True)
-		return Response(serializer.data)
-
-       
+		return Response(serializer.data)      
 
 	def perform_destroy(self, instance):
 		instance.delete()

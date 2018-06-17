@@ -1,7 +1,7 @@
 Metadata-Version: 1.1
 Name: agape-django
-Version: 0.2.8
-Summary: Collection of reusable Django Applications for RAD
+Version: 0.3.0
+Summary: Collection of reusable Django Applications for Rapid Application Development
 Home-page: https://github.com/codewiseio/agape-django
 Author: Jeffrey Ray Hallock
 Author-email: codewiseio@gmail.com
@@ -34,8 +34,11 @@ Description: # Agape
         4. Start the development server and visit http://127.0.0.1:8000/
         
         
-        ## Dependencies
         
+        ## Available Applications
+        
+        * authentication
+        * files
         
         
         
@@ -43,29 +46,40 @@ Description: # Agape
         
         ### Testing
         
+        ```
         python runtests.py 
         
         python runtests.py agape.authentication
         
         python runtests.py agape.[module]
+        ```
         
         ### Packaging & Distribution
         
         #### Package only
+        ```
         python setup.py sdist
+        ```
         
         #### Package and submit to PyPi repository
+        
+        ```
         python setup.py sdist upload -r pypi
+        ```
         
         ### Installation
         
         #### Install locally
         
+        ```
         pip install ../django-agape/dist/django-agape-*.tar.gz
+        ```
         
         #### Install from PyPi
         
+        ```
         pip install django-agape
+        ```
 Platform: UNKNOWN
 Classifier: Environment :: Web Environment
 Classifier: Framework :: Django

@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'agape.organizations',
     'agape.groups',
     'agape.members',
-    'agape.events'
+    'agape.events',
+    'agape.files'
 ]
 
 MIDDLEWARE = [
@@ -90,3 +91,8 @@ CORS_ALLOW_HEADERS = (
 CORS_EXPOSE_HEADERS = (
     'Set-Cookie',
 )
+
+# for testing file uploads
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+

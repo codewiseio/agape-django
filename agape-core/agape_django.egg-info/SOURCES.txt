@@ -30,6 +30,15 @@ agape/contacts/urls.py
 agape/contacts/views.py
 agape/contacts/migrations/0001_initial.py
 agape/contacts/migrations/__init__.py
+agape/files/admin.py
+agape/files/apps.py
+agape/files/connector.py
+agape/files/models.py
+agape/files/permissions.py
+agape/files/serializers.py
+agape/files/tests.py
+agape/files/urls.py
+agape/files/views.py
 agape/members/admin.py
 agape/members/apps.py
 agape/members/connector.py

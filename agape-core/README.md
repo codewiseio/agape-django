@@ -25,8 +25,11 @@ web applications.
 4. Start the development server and visit http://127.0.0.1:8000/
 
 
-## Dependencies
 
+## Available Applications
+
+* authentication
+* files
 
 
 
@@ -34,26 +37,37 @@ web applications.
 
 ### Testing
 
+```
 python runtests.py 
 
 python runtests.py agape.authentication
 
 python runtests.py agape.[module]
+```
 
 ### Packaging & Distribution
 
 #### Package only
+```
 python setup.py sdist
+```
 
 #### Package and submit to PyPi repository
+
+```
 python setup.py sdist upload -r pypi
+```
 
 ### Installation
 
 #### Install locally
 
+```
 pip install ../django-agape/dist/django-agape-*.tar.gz
+```
 
 #### Install from PyPi
 
+```
 pip install django-agape
+```

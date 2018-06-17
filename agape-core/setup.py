@@ -9,11 +9,11 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='agape-django',
-    version='0.2.8',
-    packages=['agape','agape.authentication','agape.contacts','agape.organizations','agape.people','agape.members',],
+    version='0.3.0',
+    packages=['agape','agape.authentication','agape.contacts','agape.organizations','agape.people','agape.members','agape.files'],
     include_package_data=True,
     license='MIT License', 
-    description='Collection of reusable Django Applications for RAD',
+    description='Collection of reusable Django Applications for Rapid Application Development',
     long_description=README,
     url = 'https://github.com/codewiseio/agape-django',
     author='Jeffrey Ray Hallock',

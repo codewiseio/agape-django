@@ -1,0 +1,125 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~material-design-icons/iconfont/material-icons.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i,400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
+mat-toolbar .site-title a,
+mat-toolbar .site-title a:hover,
+mat-toolbar .site-title a:visited
+ {
+	color: white;
+	text-decoration: none;
+}
+
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+body {
+	margin: 0px;
+}
+
+
+.sm-centered-card {
+	margin: 18px auto;
+	width: 500px;
+	max-width: 100%;
+}
+
+@media screen and (max-width: 599px) {
+	.sm-centered-card  {
+		margin: 0px 0px;
+		width: 100%;
+		max-width: 100%;
+		flex: 1;
+	}
+}
+
+
+.lg-centered-card {
+	margin: 18px auto;
+	width: 900px;
+	max-width: 100%;	
+}
+
+
+.mat-form-field.spacious {
+	margin-bottom: 1em;
+}
+
+mat-icon.toggle-display-password {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	cursor: pointer;
+	color: grey;
+}
+
+ul.plain-list {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+mat-progress-bar.valign-bottom {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+}
+
+
+
+/**
+ * Bootstrap 4 Over-rides
+ */
+
+.mat-card-actions.container {
+	width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/**
+ * Full Page App
+ */
+
+body.full-page-app {
+	height: 100vh;
+}
+
+app {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+app > mat-sidenav-container {
+	flex: 1;
+}
+
+.mat-sidenav-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center!important;
+}
+
+/** 
+ * Side Nav
+ */
+
+#sidenav {
+	min-width: 200px;
+	background-color: #5027B8;
+}
+
+#sidenav a button {
+	color: white;
+}

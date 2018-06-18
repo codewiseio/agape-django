@@ -1,0 +1,61 @@
+
+<!-- Display a message while the user is being signed out. -->
+<mat-card class="sm-centered-card" [@slideIn] *ngIf="formState == 'pending' && currentUser" > 
+		
+
+		<mat-card-content class="container">
+			<div class="row">
+				<div class="col-12 spacious">
+					You are being signed out.
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</mat-card-content>
+
+	<mat-progress-bar mode="indeterminate" class="valign-bottom" *ngIf="loading"></mat-progress-bar>
+
+</mat-card>
+
+<!-- Display a message on logout successful -->
+<mat-card class="sm-centered-card" [@slideIn] *ngIf="formState == 'complete'"> 
+
+		<mat-card-content class="container">
+			<div class="row">
+				<div class="col-xs-12 spacious">
+					You have been signed out.
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</mat-card-content>
+
+
+	<mat-card-actions class="row">
+		<div class="col-xs-12 text-center">
+			<button mat-button>
+				<a routerLink="/login" routerLinkActive="active">Sign in again</a>
+			</button>
+		</div>
+	</mat-card-actions>
+</mat-card>
+
+
+<!-- Display a message if the user is not signed in -->
+<mat-card class="sm-centered-card" [@slideIn] *ngIf="formState == 'pending' && ! service.user"> 
+	<mat-card-content class="container">
+		<div class="row">
+			<div class="col-xs-12 spacious">
+				You are not signed in.
+			</div>
+		</div>
+	</mat-card-content>
+	<mat-card-actions class="container">
+		<div class="row">
+			<div class="col-12 text-center">
+				<button mat-button>
+					<a routerLink="/login" routerLinkActive="active">Login</a>
+				</button>
+			</div>
+		</div>
+	</mat-card-actions>
+</mat-card>
+

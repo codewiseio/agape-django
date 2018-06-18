@@ -1,0 +1,25 @@
+
+
+
+<mat-card class="sm-centered-card" [@slideIn] [@shrinkOut] > 
+	<mat-card-content>
+		<div class="text-center">
+			<h1 style="color: #5027B8; font-family: 'IBM Plex Sans'; font-size: 50px">A</h1>
+		</div>
+	</mat-card-content>
+	<mat-card-actions class="container">
+        <div class="row">
+			<div class="col-sm text-center">
+				<a routerLink="/register" routerLinkActive="active">
+			        <button mat-button>Create an account</button>
+				</a>
+			</div>
+			<div class="col-sm text-center">
+			    <a routerLink="/login" routerLinkActive="active">
+				    <button mat-button>Sign in</button>
+				</a>
+			</div>
+		</div>
+	</mat-card-actions>
+</mat-card>
+

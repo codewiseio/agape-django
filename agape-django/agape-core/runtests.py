@@ -37,7 +37,8 @@ def runtests():
 				"agape.members.tests",
 				"agape.events.tests",
 				"agape.authentication.tests",
-				"agape.files.tests"
+				"agape.files.tests",
+				"agape.properties.tests"
 			]
 		)
 	sys.exit(bool(failures))

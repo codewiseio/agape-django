@@ -9,8 +9,8 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='agape-django',
-    version='0.3.0',
-    packages=['agape','agape.authentication','agape.contacts','agape.organizations','agape.people','agape.members','agape.files'],
+    version='0.4.1',
+    packages=['agape','agape.authentication','agape.contacts','agape.organizations','agape.people','agape.properties','agape.members','agape.files'],
     include_package_data=True,
     license='MIT License', 
     description='Collection of reusable Django Applications for Rapid Application Development',

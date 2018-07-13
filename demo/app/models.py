@@ -26,10 +26,11 @@ def on_user_create_success(event,user,*args,**kwargs):
 	print('CREATE SUCCESS')
 	
 	# give this person all privileges on organization
-	from guardian.shortcuts import assign_perm
-	# assign_perm('view_organization', user, scope['organization'])
-	assign_perm('change_organization', user, scope['organization'])
-	assign_perm('delete_organization', user, scope['organization'])
+	# from guardian.shortcuts import assign_perm
+	
+	# # assign_perm('view_organization', user, scope['organization'])
+	# assign_perm('change_organization', user, scope['organization'])
+	# assign_perm('delete_organization', user, scope['organization'])
 
 on('user.create:before',on_user_create_before)
 on('user.create:success',on_user_create_success)

@@ -26,7 +26,8 @@ SECRET_KEY = '9)49d_qsisf8v*z%8o9bnr#f&od$ff&rd6cuifzhuxrr3hv1o2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['45.63.97.113','127.0.0.1','localhost']
 
 
 # Application definition
@@ -44,12 +45,15 @@ INSTALLED_APPS = [
     'app',
     'agape.authentication',
     'agape.organizations',
+    'corsheaders',
+    'guardian'
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -154,6 +158,11 @@ JWT_AUTH = {
     # 'JWT_ALLOW_REFRESH': False,
     # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7)
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = (
+# '127.0.0.1',
+# )
 
 CSRF_COOKIE_NAME="XSRF-TOKEN"
 CSRF_HEADER_NAME="HTTP_X_XSRF_TOKEN"

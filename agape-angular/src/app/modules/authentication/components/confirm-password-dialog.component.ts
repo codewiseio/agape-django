@@ -6,9 +6,9 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 })
 export class ConfirmPasswordDialogComponent implements OnInit {
 
-	private model: any = {};
-    private form: any;
-    private showPassword: boolean; // display password unobscured
+	public model: any = {};
+    public form: any;
+    public showPassword: boolean; // display password unobscured
 
 	constructor() { }
 

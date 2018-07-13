@@ -229,10 +229,11 @@ class APITestCase(TestCase):
 
         instance_id = response.data.get('id')
         uri = "{}{}/".format(self.api_end_point,instance_id)
-        self.assertEqual(response.status_code, 201, "Retrieved")
 
         response = None
         response = self.client.get(uri)
+        self.assertEqual(response.status_code, 200, "Retrieved")
+
 
         # compare response to expected data
         for key, expected_value in self.serialized_expect_data.items():

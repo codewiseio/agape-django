@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'agape.groups',
     'agape.members',
     'agape.events',
-    'agape.files'
+    'agape.files',
+    'agape.properties'
 ]
 
 MIDDLEWARE = [

@@ -1,12 +1,11 @@
 Metadata-Version: 1.1
 Name: agape-django
-Version: 0.3.0
+Version: 0.4.1
 Summary: Collection of reusable Django Applications for Rapid Application Development
 Home-page: https://github.com/codewiseio/agape-django
 Author: Jeffrey Ray Hallock
 Author-email: codewiseio@gmail.com
 License: MIT License
-Description-Content-Type: UNKNOWN
 Description: # Agape
         
         

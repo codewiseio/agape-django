@@ -1,7 +1,7 @@
 
 <mat-card class="sm-centered-card" [@slideIn] *ngIf="formState == 'pending'"> 
 
-	<form class="register-form" (ngSubmit)="submit(form)" [formGroup]="form">
+	<form class="register-form" (ngSubmit)="submit()" [formGroup]="form">
 		
 		<mat-card-title>
 		  <span>Sign Up</span>
@@ -76,10 +76,12 @@
 		  <span>Account Activation</span>
 		</mat-card-title>
 
-		<mat-card-content class="row">
-				<div class="col-xs-12 spacious">
+		<mat-card-content class="container">
+			<div class="row">
+				<div class="col-12 spacious">
 					We just sent you an email, click the link inside to activate your account.
 				</div>
+			</div>
 		</mat-card-content>
 </mat-card>
 

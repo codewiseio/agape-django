@@ -16,15 +16,15 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 })
 export class ResetPasswordRequestComponent implements OnInit {
 
-    private model: any = {};
-    private form: FormGroup;
-    private formState: string = 'pending';
-    private loading: boolean = false;
+    public model: any = {};
+    public form: FormGroup;
+    public formState: string = 'pending';
+    public loading: boolean = false;
 
 
     constructor(
-        private AuthenticationService: AuthenticationService,
-		private snackBar: MatSnackBar) { }
+        public AuthenticationService: AuthenticationService,
+		public snackBar: MatSnackBar) { }
 
 	ngOnInit() {
 		this.form = new FormGroup({

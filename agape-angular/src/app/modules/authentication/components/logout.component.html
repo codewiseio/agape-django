@@ -1,6 +1,6 @@
 
 <!-- Display a message while the user is being signed out. -->
-<mat-card class="sm-centered-card" [@slideIn] *ngIf="formState == 'pending' && currentUser" > 
+<mat-card class="sm-centered-card" [@slideIn] *ngIf="formState == 'pending' && service.user" > 
 		
 
 		<mat-card-content class="container">

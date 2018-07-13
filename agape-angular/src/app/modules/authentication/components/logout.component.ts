@@ -13,12 +13,12 @@ import { AuthenticationService } from '../services/authentication.service';
 export class LogoutComponent implements OnInit {
 
     // if form has been submitted and awaiting response
-    private loading: boolean = true;
-    private formState: string = 'pending';
+    public loading: boolean = true;
+    public formState: string = 'pending';
 
 	constructor(
-		private service: AuthenticationService,
-		private snackBar: MatSnackBar ) { 		
+		public service: AuthenticationService,
+		public snackBar: MatSnackBar ) { 		
 	}
 
 	ngOnInit() {

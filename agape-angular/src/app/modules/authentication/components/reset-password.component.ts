@@ -15,19 +15,19 @@ import { slideIn, shrinkOut } from '../../../animations';
 })
 export class ResetPasswordComponent implements OnInit {
 
-    private model: any = {};
-    private errorMessage: string;
-    private form: FormGroup;
-    private formState: string = 'initializing';
-    private loading: boolean = false;
-    private showPassword: boolean;
-    private key: string;
+    public model: any = {};
+    public errorMessage: string;
+    public form: FormGroup;
+    public formState: string = 'initializing';
+    public loading: boolean = false;
+    public showPassword: boolean;
+    public key: string;
 
   constructor(
-  	private route: ActivatedRoute,
-  	private router: Router,
-  	private service: AuthenticationService,
-  	private snackBar: MatSnackBar) { }
+  	public route: ActivatedRoute,
+  	public router: Router,
+  	public service: AuthenticationService,
+  	public snackBar: MatSnackBar) { }
 
 
 	ngOnInit() {

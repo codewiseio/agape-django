@@ -6,6 +6,7 @@ setup.py
 agape/__init__.py
 agape/models.py
 agape/signals.py
+agape/test.py
 agape/viewsets.py
 agape/authentication/__init__.py
 agape/authentication/admin.py
@@ -71,6 +72,14 @@ agape/people/urls.py
 agape/people/views.py
 agape/people/migrations/0001_initial.py
 agape/people/migrations/__init__.py
+agape/properties/__init__.py
+agape/properties/admin.py
+agape/properties/apps.py
+agape/properties/models.py
+agape/properties/serializers.py
+agape/properties/tests.py
+agape/properties/urls.py
+agape/properties/views.py
 agape_django.egg-info/PKG-INFO
 agape_django.egg-info/SOURCES.txt
 agape_django.egg-info/dependency_links.txt

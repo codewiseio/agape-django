@@ -8,5 +8,7 @@ urlpatterns = [
     url(r'^api/v1/', include('agape.groups.urls') ),
     url(r'^api/v1/', include('agape.members.urls') ),
     url(r'^api/v1/', include('agape.events.urls') ),
-    url(r'^api/v1/', include('agape.files.urls') )
+    url(r'^api/v1/', include('agape.files.urls') ),
+ 		url(r'^api/v1/', include('agape.properties.urls') ),
+       
 ]

@@ -190,7 +190,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 [user.email],
                 fail_silently=False
             )
-        except error:
+        except Error as error:
             print( error )
 
 
@@ -206,6 +206,12 @@ class AuthenticationView(views.APIView):
         data = request.data
         email = data.get('email', None)
         password = data.get('password', None)
+
+
+        # TODO: Find the user based on the supplied credentials
+        # User can login with username, email, or phone number
+        #
+        # Once the user is found, authenticate the user
 
         # authenticate the user
         user = authenticate(email=email, password=password)

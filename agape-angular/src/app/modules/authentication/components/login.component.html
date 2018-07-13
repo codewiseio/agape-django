@@ -1,7 +1,7 @@
 
 <!-- Display login form if not logged in -->
-<mat-card class="sm-centered-card" [@slideIn] *ngIf="formState == 'pending' && ! currentUser" > 
-	<form class="login-form" (ngSubmit)="submit(form)" [formGroup]="form">
+<mat-card class="sm-centered-card" [@slideIn] *ngIf="formState == 'pending' && ! service.user" > 
+	<form class="login-form" (ngSubmit)="submit()" [formGroup]="form">
 
 		<mat-card-title>
 		  <span>Sign in</span>
@@ -76,7 +76,7 @@
 
 		<mat-card-content class="row">
 				<div class="col-xs-12 spacious">
-					You are currently logged in as {{currentUser.email}}.
+					You are currently logged in as {{service.user.email}}.
 				</div>
 		</mat-card-content>
 	<mat-card-actions class="row">

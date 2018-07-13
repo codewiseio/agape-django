@@ -20,15 +20,16 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 })
 export class ModifyCredentialsComponent implements OnInit {
 
-    private model: any = {};
-    private form: any;
-    private loading: boolean = false;
-    private formState: string = 'pending';
+    public model: any = {};
+    public form: any;
+    public loading: boolean = false;
+    public formState: string = 'pending';
+    public showPassword: boolean = false;
 
     constructor(
-        private service: AuthenticationService,
+        public service: AuthenticationService,
         public dialog: MatDialog,
-        private snackBar: MatSnackBar) { }
+        public snackBar: MatSnackBar) { }
 
 	ngOnInit() {
 		this.form = new FormGroup({

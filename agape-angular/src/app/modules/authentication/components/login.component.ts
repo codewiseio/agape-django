@@ -12,19 +12,19 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LoginComponent implements OnInit {
 
-	private model: any = {};
-    private form: any;
+	public model: any = {};
+    public form: any;
     // if form has been submitted and awaiting response
-    private loading: boolean = false;
-    private formState: string = 'pending';
+    public loading: boolean = false;
+    public formState: string = 'pending';
 
     // display password unobscured
-    private showPassword: boolean;
+    public showPassword: boolean;
 
 
 	constructor(
-		private service: AuthenticationService,
-		private snackBar: MatSnackBar ) { 
+		public service: AuthenticationService,
+		public snackBar: MatSnackBar ) { 
 
 	}
 

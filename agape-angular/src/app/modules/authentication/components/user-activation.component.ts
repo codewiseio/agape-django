@@ -11,15 +11,15 @@ import { MatSnackBar } from '@angular/material';
 })
 export class UserActivationComponent implements OnInit {
 
-  private pageState: string = 'pending';
-  private countDown: any;
-  private count: number = 5;
+  public pageState: string = 'pending';
+  public countDown: any;
+  public count: number = 5;
 
   constructor(
-  	private route: ActivatedRoute,
-  	private router: Router,
-  	private service: AuthenticationService,
-    private snackBar: MatSnackBar ) { }
+  	public route: ActivatedRoute,
+  	public router: Router,
+  	public service: AuthenticationService,
+    public snackBar: MatSnackBar ) { }
 
 
   ngOnInit() {

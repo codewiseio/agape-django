@@ -17,14 +17,17 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 })
 export class RegisterComponent implements OnInit {
 
-    private model: any = {};
-    private form: any;
-    private showPassword: boolean;
-    private loading: boolean = false;
-    private formState: string = 'pending';
+    public model: any = {};
+    public form: any;
+    public showPassword: boolean;
+    public loading: boolean = false;
+    public formState: string = 'pending';
+
+    public user: any;
+
 
     constructor(
-        private service: AuthenticationService,
+        public service: AuthenticationService,
         public snackBar: MatSnackBar) { }
 
 	ngOnInit() {
@@ -41,10 +44,21 @@ export class RegisterComponent implements OnInit {
 		this.loading = true;
 		this.service.register(this.model)
 			.then( 
-			(user) => {
+			(response: any) => {
 				this.formState = 'complete';
+
+				// TODO: If account requires activation, display the "we just
+				// sent you an email message."  If the account is already active
+				// display a message and redirect the user to the "next" area
+
+				// this.user = response.user;
+
+				// // this.userState could be
+				// 'account-active'
+				// 'awaiting-activation'
+
 				console.log('Created user ');
-				console.log(user);
+				console.log(response);
 			},
 			(response: any) => {
 				this.loading = false;
